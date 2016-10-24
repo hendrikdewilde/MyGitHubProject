@@ -1,0 +1,44 @@
+{% extends "page.html" %}
+{% load staticfiles %}
+
+{% block title %}Issues page.{% endblock %}
+
+{% block pagetitle %}Add Issues for Repo '{{ GITHUB_ORG_REPO_NAME }}':{% endblock %}
+
+{% block content %}
+
+    {% if send_status %}
+        <p><h4>{{ send_status }}</h4>
+        <br>
+
+        <p><a href="{% url 'view_issues_page_1' GITHUB_ORG_REPO_NAME %}" ><input type=button value="Back"></a></p>
+        <br>
+    {% else %}
+        <p><h4 class="dataLabel">Please fill in all the detail for your new Issue:</h4>
+        {% if error %}
+            <p><h4>{{ error }}</h4>
+        {% endif %}
+
+        {% if form_name == "add_issue_1" %}
+            <form method="post" action="{% url 'add_issue_page_1' GITHUB_ORG_REPO_NAME %}">
+            {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <input type="submit" value="Submit">
+            </form>
+        {% endif %}
+        {% if form_name == "add_issue_2" %}
+            <form method="post" action="{% url 'add_issue_page_2' GITHUB_ORG_REPO_NAME %}">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <input type="submit" value="Submit">
+            </form>
+        {% endif %}
+
+        <p><a href="{% url 'view_issues_page_1' GITHUB_ORG_REPO_NAME %}" ><input type=button value="Back"></a></p>
+        <br>
+    {% endif %}
+{% endblock %}

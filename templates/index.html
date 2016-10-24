@@ -1,0 +1,18 @@
+{% extends "page.html" %}
+{% load staticfiles %}
+
+{% block title %}Index page.{% endblock %}
+
+{% block pagetitle %}Login{% endblock %}
+
+{% block content %}
+
+    {% if error %}
+        <p><h4>{{ error }}</h4>
+    {% endif %}
+    <p>Click here to Login:</p>
+    <p><a href="{% url 'credentials_validate_page' %}"><input type=button value="Dashboard Page"></a>
+
+
+
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "page.html" %}
+{% load staticfiles %}
+
+{% block title %}Issues page.{% endblock %}
+
+{% block pagetitle %}View Issues for Repo '{{ GITHUB_ORG_REPO_NAME }}':{% endblock %}
+
+{% block content %}
+
+    <p><h4 class="dataLabel">Here are the list of Issues:</h4>
+    {% if error %}
+        <p><h4>{{ error }}</h4>
+    {% else %}
+        {% if issue_items %}
+    <p><a href="{% url 'dashboard_page' %}" ><input type=button value="Back"></a>
+        <a href="{% url 'add_issue_page_2' GITHUB_ORG_REPO_NAME %}" ><input type=button value="Add Issue (Using OAuth Token)"></a></p>
+            <br>
+            <table border="1" cellpadding="1" cellspacing="1" style="height:100px; width:1160px">
+                <tbody>
+                    <tr>
+                        <td>
+                            <h5>Client Name</h5>
+                        </td>
+                        <td>
+                            <h5>Action<br>Item/Request</h5>
+                        </td>
+                        <td>
+                            <h5>Description</h5>
+                        </td>
+                        <td>
+                            <h5>GH Number</h5>
+                        </td>
+                        <td>
+                            <h5>Priority<br>(High,Med,Low)</h5>
+                        </td>
+                        <td>
+                            <h5>Category<br>(Bug,Enhancement,Reporting,OPS Support)</h5>
+                        </td>
+                        <td>
+                            <h5>Assigned To</h5>
+                        </td>
+                        <td>
+                            <h5>Comments</h5>
+                        </td>
+                        <td>
+                            <h5>Status</h5>
+                        </td>
+                    </tr>
+
+            {% for data in issue_items %}
+                <tr>
+                    <td>
+                        {% if data.labels %}
+                            {% for label in data.labels %}
+                                {% if "C: " in label.name %}
+                                    {{ label.name|slice:"3:" }}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ data.title }}
+                    </td>
+                    <td>
+                        {{ data.body }}
+                    </td>
+                    <td>
+                        #{{ data.number }}
+                    </td>
+                    <td>
+                        {% if data.labels %}
+                            {% for label in data.labels %}
+                                {% if "P: " in label.name %}
+                                    {{ label.name|slice:"3:" }}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if data.labels %}
+                            {% for label in data.labels %}
+                                {% if not ": " in label.name %}
+                                    {{ label.name }}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if data.assignee %}{{ data.assignee.login }}{% else %} {% endif %}
+                    </td>
+                    <td>
+                        {{ data.comments }}
+                    </td>
+                    <td>
+                        {{ data.state }}
+                    </td>
+                </tr>
+            {% endfor %}
+
+                </tbody>
+            </table>
+            <br>
+        {% else %}
+            <p><h3>No Issues</h3>
+            <br>
+        {% endif %}
+    {% endif %}
+    <p><a href="{% url 'dashboard_page' %}" ><input type=button value="Back"></a>
+        <a href="{% url 'add_issue_page_2' GITHUB_ORG_REPO_NAME %}" ><input type=button value="Add Issue (Using OAuth Token)"></a></p>
+    <br>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "page.html" %}
+{% load staticfiles %}
+
+{% block title %}MyGitHubProject Dashboard page.{% endblock %}
+
+{% block pagetitle %}Dashboard for Following Repos{% endblock %}
+
+{% block content %}
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabForm">
+
+ <tr>
+  <td>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+	 <tr>
+	  <td class="dataLabel"><h4 class="dataLabel">Options: </h4></td>
+	 </tr>
+     <tr>
+	  <td  class="dataField" colspan="1"></td>
+	 </tr>
+     <tr>
+	  <td  class="dataField" colspan="1">{{ GITHUB_ORG_REPO_NAME_WASF }}</td>
+	 </tr>
+     <tr>
+	     <td  class="dataField" colspan="1"><p><a href="{% url 'view_issues_page_1' GITHUB_ORG_REPO_NAME_WASF %}" ><input name="button" type="button" value="View Issues for Repo {{ GITHUB_ORG_REPO_NAME_WASF }} from GITHub" /></a></td>
+	 </tr>
+    <tr>
+	  <td  class="dataField" colspan="1"></td>
+	 </tr>
+     <tr>
+	  <td  class="dataField" colspan="1"><a href="{% url 'index_page' %}" ><input type=button value="Exit"></a></td>
+	 </tr>
+
+    </table>
+  </td>
+ </tr>
+
+</table>
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "page.html" %}
+{% load staticfiles %}
+
+{% block title %}Issues page.{% endblock %}
+
+{% block pagetitle %}View Issues for Repo '{{ GITHUB_ORG_REPO_NAME }}':{% endblock %}
+
+{% block content %}
+
+    <p><h4 class="dataLabel">Here are the list of Issues:</h4>
+
+    {% if error %}
+        <p><h4>{{ error }}</h4>
+    {% else %}
+        {% if issue_list %}
+    <p><a href="{% url 'dashboard_page' %}" ><input type=button value="Back"></a>
+        <a href="{% url 'add_issue_page_2' GITHUB_ORG_REPO_NAME %}" ><input type=button value="Add Issue (Using OAuth Token)"></a></p>
+            <br>
+            <table border="1" cellpadding="1" cellspacing="1" style="height:100px; width:1160px">
+                <tbody>
+                    <tr>
+                        <td>
+                            <h5>Client Name</h5>
+                        </td>
+                        <td>
+                            <h5>Action<br>Item/Request</h5>
+                        </td>
+                        <td>
+                            <h5>Description</h5>
+                        </td>
+                        <td>
+                            <h5>GH Number</h5>
+                        </td>
+                        <td>
+                            <h5>Priority<br>(High,Med,Low)</h5>
+                        </td>
+                        <td>
+                            <h5>Category<br>(Bug,Enhancement,Reporting,OPS Support)</h5>
+                        </td>
+                        <td>
+                            <h5>Assigned To</h5>
+                        </td>
+                        <td>
+                            <h5>Comments</h5>
+                        </td>
+                        <td>
+                            <h5>Status</h5>
+                        </td>
+                    </tr>
+
+            {% for data in issue_list %}
+                <tr>
+                    <td>
+                        {{ data.name }}
+                    </td>
+                    <td>
+                        {{ data.action }}
+                    </td>
+                    <td>
+                        {{ data.description }}
+                    </td>
+                    <td>
+                        #{{ data.number }}
+                    </td>
+                    <td>
+                        {{ data.priority }}
+                    </td>
+                    <td>
+                        {{ data.category }}
+                    </td>
+                    <td>
+                        {{ data.assigned_to }}
+                    </td>
+                    <td>
+                        {{ data.comments }}
+                    </td>
+                    <td>
+                        {{ data.status }}
+                    </td>
+                </tr>
+            {% endfor %}
+
+                </tbody>
+            </table>
+            <br>
+        {% else %}
+            <p><h3>No Issues</h3>
+            <br>
+        {% endif %}
+    {% endif %}
+    <p><a href="{% url 'dashboard_page' %}" ><input type=button value="Back"></a>
+        <a href="{% url 'add_issue_page_2' GITHUB_ORG_REPO_NAME %}" ><input type=button value="Add Issue (Using OAuth Token)"></a></p>
+    <br>
+
+{% endblock %}
